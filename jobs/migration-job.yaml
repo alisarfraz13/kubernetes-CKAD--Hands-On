@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration-job
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - name: migration-container
+        image: ubuntu
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            echo "Connecting to MariaDB."
+            sleep 2
+            echo "Running database schema migrations."
+            sleep 3
+            echo "Tables updated successfully! Exit code 0."
+      restartPolicy: Never

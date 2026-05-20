@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hung-backup-job
+  namespace: default
+spec:
+  activeDeadlineSeconds: 15
+  template:
+    spec:
+      containers:
+      - name: backup-streamer
+        image: ubuntu
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            echo "Starting heavy database streaming backup..."
+            sleep 600
+            echo "never run this line!"
+      restartPolicy: Never

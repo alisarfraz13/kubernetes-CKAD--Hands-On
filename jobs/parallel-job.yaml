@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parallel-video-processing
+  namespace: default
+spec:
+  completions: 4
+  parallelism: 2
+  template:
+    spec:
+      containers:
+      - name: video-encoder
+        image: ubuntu
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            echo "Pod $HOSTNAME: Started encoding video chunk..."
+            sleep 8
+            echo "Pod $HOSTNAME: Chunk encoded successfully!"
+      restartPolicy: Never
