@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ambassador-pod
+spec:
+  containers:
+  - name: main-container
+    image: curlimages/curl     #radial/busyboxplus:curl
+    command: ['sh', '-c', 'while true; do curl localhost:8080; sleep 5; done']
+  - name: ambassador-container-haproxy
+    image: haproxy:2.4
+    volumeMounts:
+    - name: config
+      mountPath: /usr/local/etc/haproxy/
+  volumes:
+  - name: config
+    configMap:
+      name: haproxy-config
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: haproxy-config
+data:
+  haproxy.cfg: |
+    global
+        maxconn 256
+    defaults
+        mode http
+        timeout connect 5s
+        timeout client 50s
+        timeout server 50s
+    frontend ambassador
+        bind *:8080
+        default_backend ambassador_service_backend
+    backend ambassador_service_backend
+        server svc ambassador-service:8081
