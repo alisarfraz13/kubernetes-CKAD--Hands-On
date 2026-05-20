@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: backup-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: backup-worker
+        image: ubuntu
+        command: ["bin/bash", "-c", "echo 'Database backup started...'; sleep 10; echo 'Backup successfully uploaded to S3!'"]
+      
+      restartPolicy: Never 

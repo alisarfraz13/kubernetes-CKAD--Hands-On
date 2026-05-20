@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db-pod
+  namespace: dev
+  labels:
+    name: blue
+spec:
+  containers:
+  - name: redis
+    image: redis:alpine
+    env:
+    - name: REDIS_ROOT_PASSWORD
+      value: paswr
+    ports:
+    - containerPort: 6379
+      protocol: TCP
