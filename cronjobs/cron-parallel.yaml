@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: parallel-heavy-cronjob
+  namespace: default
+spec:
+  schedule: "*/5 * * * *"
+  timeZone: "Asia/Karachi"
+  concurrencyPolicy: Forbid
+  suspend: false
+  startingDeadlineSeconds: 60
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      activeDeadlineSeconds: 30
+      parallelism: 2
+      completions: 4
+      template:
+        spec:
+          containers:
+          - name: parallel-worker
+            image: busybox:stable
+            command: ["/bin/sh", "-c", "echo 'Processing chunk...'; sleep 5"]
+          restartPolicy: OnFailure

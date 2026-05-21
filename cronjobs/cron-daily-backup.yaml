@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: daily-backup-cronjob
+  namespace: default
+spec:
+  schedule: "0 0 * * *"
+  timeZone: "Asia/Karachi"
+  concurrencyPolicy: Forbid
+  suspend: false
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 5
+      activeDeadlineSeconds: 120
+      template:
+        spec:
+          containers:
+          - name: backup-worker
+            image: alpine:latest
+            command: ["/bin/sh", "-c", "echo 'Starting database backup simulation...'; sleep 10; echo 'Backup uploaded to storage!'"]
+          restartPolicy: OnFailure

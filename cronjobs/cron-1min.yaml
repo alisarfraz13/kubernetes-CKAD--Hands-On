@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: quick-test-cronjob
+  namespace: default
+spec:
+  schedule: "*/1 * * * *"
+  timeZone: "Asia/Karachi"
+  concurrencyPolicy: Forbid
+  suspend: false
+  startingDeadlineSeconds: 30
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 15
+      template:
+        spec:
+          containers:
+          - name: worker
+            image: busybox:stable
+            command:
+            - echo
+            - "Quick 1-minute test successful!"
+          restartPolicy: Never

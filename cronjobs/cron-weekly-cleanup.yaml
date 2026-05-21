@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: weekly-cleanup-cronjob
+  namespace: default
+spec:
+  schedule: "0 0 * * 0"
+  timeZone: "Asia/Karachi"
+  concurrencyPolicy: Replace
+  suspend: false
+  startingDeadlineSeconds: 600
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 4
+      activeDeadlineSeconds: 60
+      template:
+        spec:
+          containers:
+          - name: cleanup-worker
+            image: ubuntu:latest
+            command: ["/bin/bash", "-c", "echo 'Cleaning up expired staging logs...'; sleep 5"]
+          restartPolicy: Never
