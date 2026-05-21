@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: production-backup
+spec:
+  schedule: "*/1 * * * *"
+  timeZone: "Asia/Karachi"
+  concurrencyPolicy: Forbid
+  suspend: false
+  startingDeadlineSeconds: 60
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: worker
+            image: ubuntu
+            command: ["echo", "Backup Done"]
+          restartPolicy: OnFailure
