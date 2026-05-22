@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: version-pod
+spec:
+  containers:
+  - name: ping-container
+    image: busybox:stable
+    imagePullPolicy: IfNotPresent
+    command: ["/bin/sh"]
+    # --- IS LIFAFE KO BADAL DIYA ---
+    args: ["-c", "echo 'sucessful' && uname -a && sleep 5"]
+  restartPolicy: Never
