@@ -1,0 +1,41 @@
+1-kubectl run al-nafi-nginx-pod --image nginx
+2-kubectl run test-pod --image redis --dry-run=client
+3-kubectl run test-pod --image redis --dry-run=client -o yaml
+4-kubectl run test-pod --image redis --dry-run=client -o yaml > imperative-test-pod.yam
+5-kubectl create deploy test-deploy --image nginx --replicas 3 --dry-run=client
+6-kubectl create deploy test-deploy --image nginx --replicas 3 --dry-run=client -o yaml > test-deployment.yaml
+7-kubectl expose pod test-pod --port 6379 --name redis-service  --dry-run=client -o yaml > test-service.yaml
+8-kubectl run my-pod --image=nginx:alpine
+9-kubectl run test-pod --image=redis --dry-run=client -o yaml > pod.yaml
+10-kubectl run interactive-pod --image=busybox --restart=Never -it -- /bin/sh
+11-kubectl run web-pod --image=nginx --labels="env=prod,app=frontend"
+12-kubectl run multi-pod --image=nginx --dry-run=client -o yaml > multi.yaml
+13-kubectl create deployment my-deploy --image=nginx:alpine --replicas=4 --port=80
+14-kubectl create deployment api-deploy --image=node:18 --replicas=3 --dry-run=client -o yaml > deploy.yaml
+15-kubectl scale deployment my-deploy --replicas=6
+16-kubectl set image deployment/my-deploy nginx=nginx:1.25
+17-kubectl expose deployment my-deploy --port=80 --target-port=80 --type=NodePort --name=my-nodeport-svc
+18-kubectl create service clusterip my-internal-svc --tcp=80:8080 --dry-run=client -o yaml > svc.yaml
+19-kubectl create service loadbalancer my-lb-svc --tcp=443:8443
+20-kubectl create configmap nginx-config --from-file=nginx.conf
+21-kubectl run secure-pod --image=redis -n staging
+22-kubectl config set-context --current --namespace=staging
+23-kubectl delete pods,deployments,services -l env=prod
+24-kubectl delete all --all -n staging
+25-
+26-
+27-
+28-
+29-
+30-
+31-
+32-
+33-
+34-
+35-
+36-
+37-
+38-
+39-
+40-
+
