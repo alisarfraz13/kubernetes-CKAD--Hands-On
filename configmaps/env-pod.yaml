@@ -1,0 +1,12 @@
+apiVersion: v1
+kind:
+metadata:
+  name: tweb-pod
+  namespace: defualt
+spec:
+  container:
+  - name: test-container
+    image: kodekloud/webapp-color
+    envFrom:
+    - configMapRef:
+        name: web-config
