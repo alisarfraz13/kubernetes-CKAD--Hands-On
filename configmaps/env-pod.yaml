@@ -1,8 +1,10 @@
 apiVersion: v1
-kind:
+kind: Pod
 metadata:
-  name: tweb-pod
-  namespace: defualt
+  name: web-pod
+  labels:
+    web: app
+ namespace: default
 spec:
   container:
   - name: test-container
