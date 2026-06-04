@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-config-pod
+spec:
+  containers:
+  - name: app-container
+    image: busybox:stable
+    command: ["/bin/sh", "-c"]
+    args:
+    - |
+      echo "--- Testing Env Vars ---"
+      echo "Port coming from ConfigMap is: $MY_PORT"
+      echo "Log level is: $MY_LOG_LEVEL"
+      echo "--- Testing Mounted File ---"
+      cat /etc/config/myapp.conf
+      sleep 3600
+    env:
+    - name: MY_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: al-nafi-config
+          key: APP_PORT
+    - name: MY_LOG_LEVEL
+      valueFrom:
+        configMapKeyRef:
+          name: al-nafi-config
+          key: LOG_LEVEL
