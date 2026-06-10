@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: automated-backup-pod
+  namespace: default
+spec:
+  serviceAccountName: backup-operator-sa
+  containers:
+  - name: backup-container
+    image: ubuntu
+    command: ["sleep", "3600"]
