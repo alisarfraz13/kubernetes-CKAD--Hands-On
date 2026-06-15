@@ -2,13 +2,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   namespace: default
-  name: pod-reader
+  name: pod-reader  # Naam purana hi rakh rahe hain taake purani bindings distrub na hon
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - get
-  - watch
-  - list
+- apiGroups: ["*"] # 🚨 Har group ki access
+  resources: ["*"] # 🚨 Har cheez ki access (pods, services, deployments)
+  verbs: ["*"]     # 🚨 Har kaam karne ki permission (get, list, watch)

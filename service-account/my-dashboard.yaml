@@ -4,7 +4,9 @@ metadata:
   name: my-dashbaordx
   labels:
     app: dashboard
+  namespace: default
 spec:
+  serviceAccountName: dashboard-sa
   containers:
   - name: web-dashboard
     image: gcr.io/kodekloud/customimage/my-kubernetes-dashboard
@@ -14,3 +16,8 @@ spec:
     env:
     - name: PYTHONUNBUFFERED
       value: "1"
+    - name: SA_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: dashboard-sa-token
+          key: token

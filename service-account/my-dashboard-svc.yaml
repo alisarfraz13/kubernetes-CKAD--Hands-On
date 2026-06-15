@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: dashboard
-  name: dashboard-sv
+  name: dashboard-service  # 🚨 "dashboard-sv" ko badal kar yeh "dashboard-service" lazmi karein!
+  namespace: default
 spec:
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 8080
+    nodePort: 30842
   selector:
     app: dashboard
   type: NodePort
